@@ -1,4 +1,4 @@
-from strategy_desempate import StrategyDesempate
+from patrones.strategy_desempate import StrategyDesempate
 
 class DesempateMayorVotos(StrategyDesempate):
     """Gana la opción con más votos"""
