@@ -41,5 +41,9 @@ def menu():
         else:
             print("Opción no válida, intenta de nuevo.")
 
-if __name__ == "__main__":
+def iniciar_cli():
+    """Función que inicia el menú CLI cuando se llama desde main.py"""
     menu()
+
+if __name__ == "__main__":
+    iniciar_cli()
