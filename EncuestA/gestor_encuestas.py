@@ -1,8 +1,10 @@
 from encuesta import Encuesta
 from patrones.observer import GestorObservadores
+from patrones.desempate_mayor_votos import DesempateMayorVotos
 
 class GestorEncuestas:
-    def __init__(self):
+    def __init__(self, strategy=DesempateMayorVotos()):
+        self.strategy = strategy
         self.encuestas_activas = {}
         self.encuestas_cerradas = {}
         self.observadores = GestorObservadores()
@@ -22,6 +24,10 @@ class GestorEncuestas:
         """Obtiene los resultados parciales de una encuesta"""
         encuesta = self.encuestas_activas.get(encuesta_id) or self.encuestas_cerradas.get(encuesta_id)
         return encuesta.obtener_resultados() if encuesta else "Encuesta no encontrada."
+
+    def desempatar(self, encuesta_id):
+        encuesta = self.encuestas_cerradas.get(encuesta_id)
+        return self.strategy.resolver(encuesta.obtener_resultados()) if encuesta else "Encuesta no encontrada."
 
     def cerrar_encuesta(self, encuesta_id):
         if encuesta_id in self.encuestas_activas:
