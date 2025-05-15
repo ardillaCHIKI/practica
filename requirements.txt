@@ -1,4 +1,6 @@
-torch
 gradio
 transformers
-datetime
+torch
+numpy
+pandas
+pytest
