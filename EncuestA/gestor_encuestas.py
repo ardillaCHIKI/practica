@@ -1,4 +1,4 @@
-from encuesta import Encuesta
+from Encuesta.encuesta import Encuesta
 from patrones.observer import GestorObservadores
 from patrones.desempate_mayor_votos import DesempateMayorVotos
 
