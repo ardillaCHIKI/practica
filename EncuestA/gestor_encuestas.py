@@ -1,10 +1,11 @@
 from encuesta import Encuesta
+from patrones.observer import GestorObservadores
 
 class GestorEncuestas:
     def __init__(self):
-        """Inicializa el gestor de encuestas con listas de activas y cerradas"""
         self.encuestas_activas = {}
         self.encuestas_cerradas = {}
+        self.observadores = GestorObservadores()
 
     def crear_encuesta(self, pregunta, opciones, duracion):
         """Crea una nueva encuesta y la registra en encuestas activas"""
@@ -23,10 +24,9 @@ class GestorEncuestas:
         return encuesta.obtener_resultados() if encuesta else "Encuesta no encontrada."
 
     def cerrar_encuesta(self, encuesta_id):
-        """Cierra manualmente una encuesta y la mueve a cerradas"""
-        encuesta = self.encuestas_activas.pop(encuesta_id, None)
-        if encuesta:
-            encuesta.cerrar_encuesta()
-            self.encuestas_cerradas[encuesta_id] = encuesta
-            return "Encuesta cerrada con éxito."
-        return "Encuesta no encontrada o ya cerrada."
+        if encuesta_id in self.encuestas_activas:
+            self.encuestas_cerradas[encuesta_id] = self.encuestas_activas.pop(encuesta_id)
+            self.encuestas_cerradas[encuesta_id].cerrar_encuesta()
+            self.observadores.notificar(encuesta_id)  # 🔔 Notificar módulos
+            return "Encuesta cerrada y módulos notificados."
+        return "Encuesta no encontrada."
