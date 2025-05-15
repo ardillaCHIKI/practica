@@ -1,4 +1,4 @@
-from TokenS.nft import NFT
+from nft import NFT
 from repositorio_nft import RepositorioNFT
 
 class GestorNFT:
